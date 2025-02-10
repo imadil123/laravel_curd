@@ -1,0 +1,70 @@
+[
+    {   "id": 1,
+        "name": "John Doe",
+        "email": "johndoe@gmail.com",
+        "age": 25,
+        "city": "New York"
+    },
+    {  "id": 2,
+        "name": "adil",
+        "email": "adilkhan@gmail.com",
+        "age": 23,
+        "city": "Jodhpur"
+    },
+    {
+        "id": 3,
+        "name": "sky",
+        "email": "sky@gmail.com",
+        "age": 22,
+        "city": "Los Angeles"
+    },
+    {
+        "id": 4,
+        "name": "rahul",
+        "email": "rahul@gmail.com",
+        "age": 28,
+        "city": "Mumbai"
+    },
+    {
+        "id": 5,
+        "name": "Alice Smith",
+        "email": "alice.smith@gmail.com",
+        "age": 24,
+        "city": "Chicago"
+    },
+    {
+        "id": 6,
+        "name": "Bob Johnson",
+        "email": "bob.johnson@gmail.com",
+        "age": 27,
+        "city": "Houston"
+    },
+    {
+        "id": 7,
+        "name": "Charlie Brown",
+        "email": "charlie.brown@gmail.com",
+        "age": 23,
+        "city": "Phoenix"
+    },
+    {
+        "id": 8,
+        "name": "David Wilson",
+        "email": "david.wilson@gmail.com",
+        "age": 29,
+        "city": "Philadelphia"
+    },
+    {
+        "id": 9,
+        "name": "Eve Davis",
+        "email": "eve.davis@gmail.com",
+        "age": 26,
+        "city": "San Antonio"
+    },
+    {
+        "id": 10,
+        "name": "Frank Miller",
+        "email": "frank.miller@gmail.com",
+        "age": 31,
+        "city": "San Diego"
+    }
+]
