@@ -12,7 +12,7 @@
 
 <body>
     
-    // delete message
+    
     @if(session('status'))
         <x-alert type="danger" :message="session('status')" />
     @endif
@@ -30,10 +30,11 @@
                 <a href="/newUser" class="btn btn-success my-3">New User</a>
                        <span class="mx-3" style="font-size: 18px; font-weight: 500;"> Total data : {{ $data->total() }} </span>
                 <table class="table table-bordered table-striped">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th scope="col">S.no</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Gender</th>
                             <th scope="col">Email</th>
                             <th scope="col">Password</th>
                             <th scope="col">Age</th>
@@ -50,8 +51,10 @@
                             <tr>
                                 <td>{{ $id + 1}}</td>
                                 <td>{{ $stu->name }}</td>
+                                <td>{{ $stu->gender }}</td>
                                 <td>{{ $stu->email }}</td>
-                                <td>{{ $stu->password }}</td>
+                                {{-- <td>{{ Str::limit($stu->password, 10, '...') }}</td> --}}
+                                <td>{{ str_repeat('*', 10) }}</td>
                                 <td>{{ $stu->age }}</td>
                                 <td>{{ $stu->city }}</td>
                                 <td><img src="{{ asset('/storage/' . $stu->fileName) }}" alt="{{ $stu->name }}" width="100"></td>
