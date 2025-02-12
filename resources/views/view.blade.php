@@ -57,6 +57,7 @@
                             <div class="user-info text-start">
                                 
                                 <h3><strong>Name:</strong> {{ $stu->name }}</h3>
+                                <h3><strong>Gender:</strong> {{ $stu->gender }}</h3>
                                 <h3><strong>Email:</strong> {{ $stu->email }}</h3>
                                 <h3><strong>Age:</strong> {{ $stu->age }}</h3>
                                 <h3><strong>City:</strong> {{ $stu->city }}</h3>

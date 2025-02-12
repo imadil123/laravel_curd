@@ -21,7 +21,7 @@ class StudentController extends Controller
     {
         $student = DB::table('students')
                    ->where('id', $id)->get();
-        return view('users', ['data' => $student]);
+        return view('view', ['data' => $student]);
     }
 
     public function addStudent(Request $req)
@@ -32,8 +32,9 @@ class StudentController extends Controller
             'email' => 'required|email|unique:students',
             'password' => 'required|min:6',
             'age' => 'required|numeric|min:18',
-            'city' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'gender' => 'required| string | max:10',
+            'city' => 'required | string | max:50',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3000'
         ]);
         
         $file = $req->file('image');
@@ -46,6 +47,7 @@ class StudentController extends Controller
             'email' => $req->email,
             'password' => bcrypt($req->password),       
             'age' => $req->age,
+            'gender' => $req->gender,
             'city' => $req->city,
             'fileName' => $filePath
         ]);
