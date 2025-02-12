@@ -11,23 +11,16 @@ use App\Models\student;
 
 class StudentController extends Controller
 {
-    
     public function ShowStudent()
     {
         $students = DB::table('students')->paginate(5);
         return view('students', ['data' => $students]);
     }
 
-
     public function singleUser($id)
     {
         $student = DB::table('students')
-                   ->where('id', $id)->first();
-        // Convert subjects string back into an array
-        if ($student) {
-            $student->subjects = explode(',', $student->subjects);
-        }           
-
+                   ->where('id', $id)->get();
         return view('view', ['data' => $student]);
     }
 
@@ -41,16 +34,11 @@ class StudentController extends Controller
             'age' => 'required|numeric|min:18',
             'gender' => 'required| string | max:10',
             'city' => 'required | string | max:50',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3000',
-            'subjects' => 'required|array', // Ensure subjects is an array
-
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3000'
         ]);
         
         $file = $req->file('image');
         $filePath = $req->file('image')->store('upload_images', 'public');
-
-          // Convert subjects array into a string
-          $subjects = implode(',', $req->subjects);
 
         
         $student = DB::table('students')
@@ -61,9 +49,7 @@ class StudentController extends Controller
             'age' => $req->age,
             'gender' => $req->gender,
             'city' => $req->city,
-            'fileName' => $filePath,
-            'subjects' => json_encode($req->subjects), // Convert array to JSON
-
+            'fileName' => $filePath
         ]);
         
        
@@ -95,8 +81,7 @@ class StudentController extends Controller
             'name' => $req->name,
             'email' => $req->email,
             'age' => $req->age,
-            'city' => $req->city,
-            'subjects' => json_encode($req->subjects), // Convert array to JSON
+            'city' => $req->city
             
         ];
        
