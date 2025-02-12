@@ -11,13 +11,8 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-     
-    // delete message
-=======
+        
     
-    
->>>>>>> NewWork/12feb
     @if(session('status'))
         <x-alert type="danger" :message="session('status')" />
     @endif
