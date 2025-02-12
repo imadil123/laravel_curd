@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    
+     
     // delete message
     @if(session('status'))
         <x-alert type="danger" :message="session('status')" />
