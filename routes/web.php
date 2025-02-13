@@ -9,7 +9,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     // view file name
-    return view('welcome');
+    return view('welcome'); 
 });
  
 
@@ -17,17 +17,17 @@ Route::get('/user/{id}', function ($id) {
     return "<h1>user id: ".$id." </h1>";
 })->name( 'view.user');
 
-
-Route::controller(StudentController::class)->group(function(){
-
-    Route::get('/students', 'ShowStudent')->name('view.students');
-    Route::get('/students/{id}', 'singleUser')->name('view.user');
-    Route::post('/add', 'addStudent')->name('add.user');
-    Route::post('/update/{id}', 'updateStudent')->name('update.user');
-    Route::get('/updatePage/{id}', 'updatepage')->name('update.page');
-    Route::get('/delete/{id}', 'deleteStudent')->name('delete.user');
-    
+Route::middleware(['auth'])->group(function () {
+    Route::controller(StudentController::class)->group(function() {
+        Route::get('/students', 'ShowStudent')->name('view.students');
+        Route::get('/students/{id}', 'singleUser')->name('view.user');
+        Route::post('/add', 'addStudent')->name('add.user');
+        Route::post('/update/{id}', 'updateStudent')->name('update.user');
+        Route::get('/updatePage/{id}', 'updatepage')->name('update.page');
+        Route::get('/delete/{id}', 'deleteStudent')->name('delete.user');
+    });
 });
+
 Route::view('/newUser', 'newUser');
 
 
@@ -37,8 +37,9 @@ Route::view('/RegistrationPage', 'registration')->name('registration.user');
 Route::post('/RegistrationSave', [UserController::class, 'register'])->name('registrationSave');
 
 // login Route
-Route::view('/loginPage', 'login')->name('login.user');
+Route::view('/loginPage', 'login')->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.submit');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
 
 
 

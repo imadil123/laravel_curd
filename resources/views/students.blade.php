@@ -11,13 +11,8 @@
 </head>
 
 <body>
-<<<<<<< HEAD
      
-    // delete message
-=======
     
-    
->>>>>>> NewWork/12feb
     @if(session('status'))
         <x-alert type="danger" :message="session('status')" />
     @endif
@@ -32,6 +27,7 @@
         <div class="row my-3">
             <div class="col-6">
                 <h1>Student data</h1>
+                <a href="{{ route('logout.user')}}">logout</a>
                 <a href="/newUser" class="btn btn-success my-3">New User</a>
                        <span class="mx-3" style="font-size: 18px; font-weight: 500;"> Total data : {{ $data->total() }} </span>
                 <table class="table table-bordered table-striped">
