@@ -10,10 +10,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
 </head>
 <body>
-    <x-navbar/>
-    <h1>Welcome page</h1>
-    <button class="btn btn-primary" type="button"><a href="{{ route('registration.user')}}"></a>Regiter</button>
-    <button class="btn btn-primary" type="button"><a href="{{ route('login.user')}}"></a>Login</button>
+    <x-navbar/> 
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="card col-5">
+            <div class="card-header text-center">
+                <h1>Welcome page</h1>
+            </div>
+            <div class="card-body">
+                <a href="{{ route('registration.user') }}"><button class="btn btn-primary" type="button">Register</button></a>
+                <a href="{{ route('login') }}"><button class="btn btn-primary" type="button">Login</button></a>
+            </div>
+        </div>    
+    </div>
     
 
 

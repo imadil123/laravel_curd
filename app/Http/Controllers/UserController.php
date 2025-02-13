@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\StudentController;
+
 
 class UserController extends Controller
 {
@@ -28,12 +31,12 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+
         $user->save();
 
         if($user){
-            return redirect()->route('login.user')->with('success', 'Registration successful. Please login.');
+            return redirect()->route('login')->with('success', 'Registration successful. Please login.');
         }                    
-        // return redirect()->route('login.user')->with('success', 'Registration successful. Please login.');
     }
 
     public function login(Request $request)
@@ -46,19 +49,23 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('view.students')->with('success', 'Login successful.');
+            return redirect()->route('view.students')->with('login', 'Login successful.');
+        } else {
+            return redirect()->route('login')->with('login','Invalid credentials.');
         }
 
-        return redirect()->route('login.user')->withErrors('Invalid credentials.');
     }
 
-    public function studentTable()
+    public function logout()
     {
-        if(Auth::check()){
-            return view('students');
-        } else{
-            return redirect()->route('login.user')->withErrors('Please login first.');
-        }
-
+        Auth::logout();
+        // return view('login');
+        return redirect()->route('login')->with('logout', 'Logout successful.');
     }
+
+    public function loginCheck() {
+        return redirect()->route('login')->with('Please login first.');
+    }
+
+
 }
