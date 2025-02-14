@@ -11,6 +11,7 @@
 </head>
 <body>
     <x-navbar/> 
+    
     <div class="container mt-5 d-flex justify-content-center">
         <div class="card col-5">
             <div class="card-header text-center">

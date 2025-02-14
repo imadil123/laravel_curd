@@ -8,14 +8,43 @@ use App\Http\Requests\StudentRequest;
 use App\Models\User;
 use App\Models\student;
 
-
 class StudentController extends Controller
 {
     public function ShowStudent()
     {
-        $students = DB::table('students')->paginate(5);
-        return view('students', ['data' => $students]);
+        $data = array();
+        $data['students'] = DB::table('students')->paginate(3);
+        return view('students', $data);
     }
+
+    // pagination
+    public function fetchStudents(Request $request)
+    {
+        $students = DB::table('students')->paginate(3);
+    
+        if ($request->ajax()) {
+            return view('partials.students-list', ['data' => $students])->render(); 
+        }
+    
+        return redirect()->route('view.students');
+    }
+    
+    // Search records
+    public function searchStudents(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search by name, email, or city
+        $students = DB::table('students')
+            ->where('name', 'LIKE', "%{$query}%")
+            ->orWhere('email', 'LIKE', "%{$query}%")
+            ->orWhere('city', 'LIKE', "%{$query}%")
+            ->paginate(5);
+
+        return view('students', ['students' => $students]);
+    }
+
+
 
     public function singleUser($id)
     {
@@ -63,59 +92,103 @@ class StudentController extends Controller
 
     }
 
+        public function update(Request $request, $id)
+        {
+            //dd($request->all());
+            // DB::enableQueryLog(); // Enable Query Log
 
-    public function updatePage(string $id)
-    {
-        // $student = DB::table('students')->where('id',$id)->get();
-        // return $student;
+            // $student = Student::findOrFail($id);
+            // $student->update([
+            //     'name' => $request->name,
+            //     'email' => $request->email,
+            //     'age' => $request->age,
+            //     'city' => $request->city,
+            //     'gender' => $request->gender,
+            // ]);
 
-        $student = DB::table('students')->find($id);
-        return view('updateUser', ['data' => $student]);
+            //dd(DB::getQueryLog()); 
+            // Check if query is executed
 
+                $student = DB::table('students')->find($id);
+                $updateData = [
+                         'name' => $request->name,
+                         'email' => $request->email,
+                         'age' => $request->age,
+                         'city' => $request->city
+                     ];
 
-    }
+                $student = DB::table('students')->where('id', $id)->update($updateData);
 
-    public function updateStudent(Request $req, $id)
-    {
-        $updateData = [
-            'name' => $req->name,
-            'email' => $req->email,
-            'age' => $req->age,
-            'city' => $req->city
-            
-        ];
-       
-        // Fetch the existing student record
-        $student = DB::table('students')->where('id', $id)->first();
-
-        // Handle image update
-        if ($req->hasFile('image')) {
-            // Delete old image if exists
-            if ($student && $student->fileName) {
-                $oldImagePath = public_path('storage/' . $student->fileName);
-                if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath);
-                }
+            if($student) {
+                return redirect()->back()->with('update',  '<strong>Your Data!</strong> Updated Successfully...');
+            } else {
+                return redirect()->back()->with('update', '<strong>Something Went Wrong!</strong> Data Not Update...');
             }
-            // Store new image
-            $filePath = $req->file('image')->store('upload_images', 'public');
-            $updateData['fileName'] = $filePath;
         }
 
 
-        // Check if password is provided, then hash and update it
-        if ($req->filled('password')) {
-            $updateData['password'] = bcrypt($req->password);
-        }
 
-        $student = DB::table('students')->where('id', $id)->update($updateData);
+    // public function updatePage(string $id)
+    // {
+    //     // $student = DB::table('students')->where('id',$id)->get();
+    //     // return $student;
 
-        if ($student) {
-            return redirect()->route('view.students')->with('update', '<strong>Your Data!</strong> Updated Successfully...');
-        } else {
-            return redirect()->route('view.students')->with('update', '<strong>Something Went Wrong!</strong> Data Not Update...');
-        }
+    //     $student = DB::table('students')->find($id);
+    //     return view('updateUser', ['data' => $student]);
+
+
+    // }
+
+    // public function updateStudent(Request $req, $id)
+    // {
+    //     $updateData = [
+    //         'name' => $req->name,
+    //         'email' => $req->email,
+    //         'age' => $req->age,
+    //         'city' => $req->city
+            
+    //     ];
+       
+    //     // Fetch the existing student record
+    //     $student = DB::table('students')->where('id', $id)->first();
+
+    //     // Handle image update
+    //     if ($req->hasFile('image')) {
+    //         // Delete old image if exists
+    //         if ($student && $student->fileName) {
+    //             $oldImagePath = public_path('storage/' . $student->fileName);
+    //             if (file_exists($oldImagePath)) {
+    //                 unlink($oldImagePath);
+    //             }
+    //         }
+    //         // Store new image
+    //         $filePath = $req->file('image')->store('upload_images', 'public');
+    //         $updateData['fileName'] = $filePath;
+    //     }
+
+
+    //     // Check if password is provided, then hash and update it
+    //     if ($req->filled('password')) {
+    //         $updateData['password'] = bcrypt($req->password);
+    //     }
+
+    //     $student = DB::table('students')->where('id', $id)->update($updateData);
+
+    //     if ($student) {
+    //         return redirect()->route('view.students')->with('update', '<strong>Your Data!</strong> Updated Successfully...');
+    //     } else {
+    //         return redirect()->route('view.students')->with('update', '<strong>Something Went Wrong!</strong> Data Not Update...');
+    //     }
+    // }
+
+    public function destroy($id)
+    {
+        $student = Student::findOrFail($id);
+        $student->delete();
+
+        return redirect()->back()->with('status', 'Student deleted successfully!');
     }
+
 
 
     public function deleteStudent(string $id)

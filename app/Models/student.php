@@ -10,7 +10,8 @@ class Student extends Model
     use HasFactory;
 
     public $timestamps = false; // Add this line to disable automatic timestamps
-    protected $fillable = ['image']; // Add this line to allow mass assignment
+    // protected $fillable = ['image']; // Add this line to allow mass assignment
+    protected $fillable = ['name', 'email', 'age', 'city', 'gender', 'image']; // Add this line to allow mass assignment
 
 
     protected function Name(): Attribute {
