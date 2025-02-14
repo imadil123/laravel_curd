@@ -11,7 +11,14 @@ Route::get('/', function () {
     // view file name
     return view('welcome'); 
 });
- 
+
+Route::get('/students/ajax', [StudentController::class, 'fetchStudents'])->name('students.fetch');
+Route::get('/students/search', [StudentController::class, 'searchStudents'])->name('search.students');
+
+Route::put('/students/update/{id}', [StudentController::class, 'update'])->name('students.update');
+Route::delete('/students/delete/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+
 
 Route::get('/user/{id}', function ($id) {
     return "<h1>user id: ".$id." </h1>";
@@ -22,15 +29,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/students', 'ShowStudent')->name('view.students');
         Route::get('/students/{id}', 'singleUser')->name('view.user');
         Route::post('/add', 'addStudent')->name('add.user');
-        Route::post('/update/{id}', 'updateStudent')->name('update.user');
-        Route::get('/updatePage/{id}', 'updatepage')->name('update.page');
-        Route::get('/delete/{id}', 'deleteStudent')->name('delete.user');
+        // Route::post('/update/{id}', 'updateStudent')->name('update.user');
+        // Route::get('/updatePage/{id}', 'updatepage')->name('update.page');
+        // Route::get('/delete/{id}', 'deleteStudent')->name('delete.user');
     });
 });
 
 Route::view('/newUser', 'newUser');
-
-
 
 // registration Route 
 Route::view('/RegistrationPage', 'registration')->name('registration.user');
