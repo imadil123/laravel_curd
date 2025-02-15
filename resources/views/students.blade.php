@@ -8,6 +8,31 @@
     <title>Student data</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .modal-dialog {
+            max-width: 800px; /* Default 500px hota hai */
+        }
+
+        .form-control {
+            height: 5vh; 
+            font-size: 1.9vh;
+        }
+        .form-label {
+            font-size: 2vh;
+            font-weight: 500;
+        }
+        #students-container {
+            min-width: auto;
+            width: 100%;
+            overflow: auto;
+        }
+        .search {
+            height: 2.4rem;
+            font-size: medium;
+        }
+
+       
+    </style>
 </head>
 
 <body>
@@ -24,8 +49,21 @@
 
     <div class="container">
         <div class="row my-3">
-            <div class="col-6">
-                <h1>Student data</h1>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col">
+                        <h1>Student data</h1>
+                    </div>
+                    <div class="col-8">
+
+                        <form action="{{ route('search.students') }}" method="GET" class="mb-3">
+                            <div class="input-group col-6">
+                                <input type="text" name="query" class="form-control search" placeholder="Search Your Record..." value="{{ request('query') }}">
+                                <button type="submit" class="btn btn-success">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <a href="/newUser" class="btn btn-success my-3">New User</a>
                 <span class="mx-3" style="font-size: 18px; font-weight: 500;"> Total data : {{ $students->total() }} </span>
                 <div class="d-flex">
@@ -42,7 +80,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateStudentModalLabel">Update Student</h5>
+                    <h2 class="modal-title" id="updateStudentModalLabel">Update Student</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -50,23 +88,45 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="updateStudentId" name="id">
-                        <div class="mb-3">
-                            <label for="updateName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="updateName" name="name" required>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label for="updateName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="updateName" name="name" required>
+                            </div>
+                            <div class="col-md-6 position-relative">
+                                <label for="EmailControl" class="form-label">Email Address</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
+                                    <input type="email" name="email" class="form-control" id="EmailControl" placeholder="Enter your Email">
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="updateEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="updateEmail" name="email" required>
+                        <div class="mb-2 position-relative">
+                            <label for="PasswordControl" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="PasswordControl"
+                                placeholder="Enter new password (leave empty to keep old password)">
                         </div>
-                        <div class="mb-3">
-                            <label for="updateAge" class="form-label">Age</label>
-                            <input type="number" class="form-control" id="updateAge" name="age" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="updateCity" class="form-label">City</label>
-                            <input type="text" class="form-control" id="updateCity" name="city" required>
-                        </div>
-                        <div class="mb-3">
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="updateAge" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="updateAge" name="age" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="CityControl" class="form-label">City</label>
+                                <select name="city" id="CityControl" class="form-select" required>
+                                    <option value="" disabled>Select City</option>
+                                    <option value="Jodhpur">Jodhpur</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Mumbai">Mumbai</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Pune">Pune</option>
+                                    <option value="Bangalore">Bangalore</option>
+                                    <option value="Hyderabad">Hyderabad</option>
+                                    <option value="Chennai">Chennai</option>
+                                </select>
+                            </div>
+                        </div>                                             
+                        <div class="col-md-6 mb-3">
                             <label for="updateGender" class="form-label">Gender</label>
                             <select class="form-control" id="updateGender" name="gender" required>
                                 <option value="Male">Male</option>
@@ -146,7 +206,7 @@
             $('#updateName').val(studentName);
             $('#updateEmail').val(studentEmail);
             $('#updateAge').val(studentAge);
-            $('#updateCity').val(studentCity);
+            $('#CityControl').val(studentCity);
             $('#updateGender').val(studentGender);
 
             $('#updateStudentForm').attr('action', `/students/update/${studentId}`);

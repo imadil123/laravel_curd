@@ -12,11 +12,11 @@
 <body>
 <x-navbar/>
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-5 mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Login</h3>
+                        <h3 class="font-weight-bold">Login</h3>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('login.submit') }}" method="POST">
@@ -31,7 +31,6 @@
                             </div>
                             <div class="d-grid gap-2 d-md-block">
                                 <button class="btn btn-primary" type="submit">Login</button>
-                                <button class="btn btn-dark" type="button">Back</button>
                               </div>
                         </form>
                     </div>

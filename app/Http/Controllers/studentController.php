@@ -23,7 +23,7 @@ class StudentController extends Controller
         $students = DB::table('students')->paginate(3);
     
         if ($request->ajax()) {
-            return view('partials.students-list', ['data' => $students])->render(); 
+            return view('partials.students-list', ['students' => $students])->render(); 
         }
     
         return redirect()->route('view.students');
@@ -39,7 +39,7 @@ class StudentController extends Controller
             ->where('name', 'LIKE', "%{$query}%")
             ->orWhere('email', 'LIKE', "%{$query}%")
             ->orWhere('city', 'LIKE', "%{$query}%")
-            ->paginate(5);
+            ->paginate(3);
 
         return view('students', ['students' => $students]);
     }
@@ -68,7 +68,7 @@ class StudentController extends Controller
         
         $file = $req->file('image');
         $filePath = $req->file('image')->store('upload_images', 'public');
-
+        $subjects = $req->subjects;
         
         $student = DB::table('students')
         ->insert([
@@ -78,6 +78,7 @@ class StudentController extends Controller
             'age' => $req->age,
             'gender' => $req->gender,
             'city' => $req->city,
+            'subjects' => json_encode($subjects),
             'fileName' => $filePath
         ]);
         

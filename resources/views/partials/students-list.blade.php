@@ -1,10 +1,3 @@
-<form action="{{ route('search.students') }}" method="GET" class="mb-3">
-    <div class="input-group">
-        <input type="text" name="query" class="form-control" placeholder="Search Your Record..." value="{{ request('query') }}">
-        <button type="submit" class="btn btn-success">Search</button>
-    </div>
-    {{-- new branch  --}}
-</form>
 <div class="students-container">        
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
@@ -12,6 +5,7 @@
                 <th scope="col">S.no</th>
                 <th scope="col">Name</th>
                 <th scope="col">Gender</th>
+                <th scope="col">Subjects</th>
                 <th scope="col">Email</th>
                 <th scope="col">Password</th>
                 <th scope="col">Age</th>
@@ -28,6 +22,16 @@
                     <td>{{ $id + 1}}</td>
                     <td>{{ $stu->name }}</td>
                     <td>{{ $stu->gender }}</td>
+                    <td>
+                        @php
+                            $subjects = json_decode($stu->subjects, true); // Convert JSON to an array
+                        @endphp
+                        @if(is_array($subjects))  {{-- Ensure subjects is an array --}}
+                            {{ implode(', ', $subjects) }}  {{-- Display as a comma-separated list --}}
+                        @else
+                            No subjects selected
+                        @endif
+                    </td>
                     <td>{{ $stu->email }}</td>
                     <td>{{ str_repeat('*', 10) }}</td>
                     <td>{{ $stu->age }}</td>
@@ -45,7 +49,7 @@
                             Update
                         </button>
                     </td>
-                    <td><button class="btn btn-danger deleteStudentBtn" data-id="{{ $stu->id }}">
+                    <td><button class="btn btn-danger btn-sm deleteStudentBtn" data-id="{{ $stu->id }}">
                         Delete
                     </button>
                     </td>

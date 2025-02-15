@@ -132,10 +132,14 @@
                             class="form-select @error('city') is-invalid @enderror" 
                             aria-label="Default select example" required>
                             <option value="" selected>Select City</option>
+                            <option value="Jodhpur" {{ old('city') == 'Jodhpur' ? 'selected' : '' }}>Jodhpur</option>
                             <option value="Delhi" {{ old('city') == 'Delhi' ? 'selected' : '' }}>Delhi</option>
                             <option value="Mumbai" {{ old('city') == 'Mumbai' ? 'selected' : '' }}>Mumbai</option>
                             <option value="Goa" {{ old('city') == 'Goa' ? 'selected' : '' }}>Goa</option>
                             <option value="Pune" {{ old('city') == 'Pune' ? 'selected' : '' }}>Pune</option>
+                            <option value="Bangalore" {{ old('city') == 'Bangalore' ? 'selected' : '' }}>Bangalore</option>
+                            <option value="Hyderabad"{{ old('city') == 'Hyderabad' ? 'selected' : '' }}>Hyderabad</option>
+                            <option value="Chennai"{{ old('city') == 'Chennai' ? 'selected' : '' }}>Chennai</option>
                         </select>
                         <!-- Validation Message -->
                         <span class="invalid-feedback">

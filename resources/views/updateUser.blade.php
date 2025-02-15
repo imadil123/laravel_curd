@@ -64,7 +64,7 @@
     <div class="full-screen">
         <div class="container card">
             <div class="card-body ">
-            <h2 class="hadding card-title my-2">Update User Date</h2><hr>
+            <h2 class="hadding card-title my-2 font-weight-bold">Update User Date</h2><hr>
             <form class="row needs-validation" novalidate action="{{ route('update.user',$data->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-6">

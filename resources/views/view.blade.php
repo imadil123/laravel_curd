@@ -42,7 +42,7 @@
 
 
     <div class="container mt-5">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             @foreach ($data as $stu)
                 <div class="col-md-6 col-lg-4">
                     <div class="card p-3 mb-4 shadow-sm bg-white">

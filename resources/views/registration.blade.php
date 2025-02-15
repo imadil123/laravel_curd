@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
 </head>
 <body>
+ <x-navbar/>
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-5 mt-5">
                 <div class="card">
                     <div class="card-header">
@@ -40,7 +41,6 @@
                             <div class="d-grid gap-2 d-md-block">
                                 {{-- <button class="btn btn-primary" type="">Register</button> --}}
                                 <button class="btn btn-primary" type="submit">Submit</button>
-                                <button class="btn btn-dark" type="button">Back</button>
                               </div>
                         </form>
                     </div>
