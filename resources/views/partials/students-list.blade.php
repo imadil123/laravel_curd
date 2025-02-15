@@ -1,14 +1,12 @@
-
 <form action="{{ route('search.students') }}" method="GET" class="mb-3">
     <div class="input-group">
         <input type="text" name="query" class="form-control" placeholder="Search Your Record..." value="{{ request('query') }}">
         <button type="submit" class="btn btn-success">Search</button>
     </div>
+    {{-- new branch  --}}
 </form>
-
-
 <div class="students-container">        
-        <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped">
         <thead class="table-dark">
             <tr>
                 <th scope="col">S.no</th>
