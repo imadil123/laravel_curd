@@ -59,11 +59,19 @@ class StudentController extends Controller
         $req->validate([
             'name' => 'required',
             'email' => 'required|email|unique:students',
-            'password' => 'required|min:6',
+            'password' => [
+                'required',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/',  
+                'min:6'
+            ],
             'age' => 'required|numeric|min:18',
             'gender' => 'required| string | max:10',
             'city' => 'required | string | max:50',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3000'
+        ],[
+             // Custom error messages
+        'password.regex' => 'The password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
+        
         ]);
         
         $file = $req->file('image');
@@ -93,40 +101,52 @@ class StudentController extends Controller
 
     }
 
-        public function update(Request $request, $id)
-        {
-            //dd($request->all());
-            // DB::enableQueryLog(); // Enable Query Log
+       
+    public function update(Request $request, $id)
+    {
+        // Fetch existing student data
+        $student = DB::table('students')->where('id', $id)->first();
 
-            // $student = Student::findOrFail($id);
-            // $student->update([
-            //     'name' => $request->name,
-            //     'email' => $request->email,
-            //     'age' => $request->age,
-            //     'city' => $request->city,
-            //     'gender' => $request->gender,
-            // ]);
-
-            //dd(DB::getQueryLog()); 
-            // Check if query is executed
-
-                $student = DB::table('students')->find($id);
-                $updateData = [
-                         'name' => $request->name,
-                         'email' => $request->email,
-                         'age' => $request->age,
-                         'city' => $request->city
-                     ];
-
-                $student = DB::table('students')->where('id', $id)->update($updateData);
-
-            if($student) {
-                return redirect()->back()->with('update',  '<strong>Your Data!</strong> Updated Successfully...');
-            } else {
-                return redirect()->back()->with('update', '<strong>Something Went Wrong!</strong> Data Not Update...');
-            }
+        if (!$student) {
+            return redirect()->back()->with('update', '<strong>Error!</strong> Student not found...');
         }
 
+        // Prepare updated data
+        $updateData = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'age' => $request->age,
+            'city' => $request->city,
+            'gender' => $request->gender,
+            'subjects' => $request->subjects
+        ];
+        
+
+        // Check if a new image is uploaded
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if (!empty($student->fileName)) {
+                Storage::delete('public/' . $student->fileName);
+            }
+
+            // Store new file
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public', $fileName);
+
+            // Update image in database
+            $updateData['fileName'] = $fileName;
+        }
+
+        // Update student record
+        $updated = DB::table('students')->where('id', $id)->update($updateData);
+
+        if ($updated) {
+            return redirect()->back()->with('update', '<strong>Your Data!</strong> Updated Successfully...');
+        } else {
+            return redirect()->back()->with('update', '<strong>Something Went Wrong!</strong> Data Not Update...');
+        }
+    }
 
 
     // public function updatePage(string $id)

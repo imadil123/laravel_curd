@@ -45,7 +45,11 @@
                             data-email="{{ $stu->email }}"
                             data-age="{{ $stu->age }}"
                             data-city="{{ $stu->city }}"
-                            data-gender="{{ $stu->gender }}">
+                            data-gender="{{ $stu->gender }}"
+                            data-subjects="{{ json_encode($stu->subjects) }}"
+                            data-image="{{ $stu->fileName }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#updateStudentModal">
                             Update
                         </button>
                     </td>

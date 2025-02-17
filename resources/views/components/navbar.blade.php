@@ -32,6 +32,33 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <div class="hello capsule">
+          <div class="dropdown">
+            <a class="btn btn-light dropdown-toggle capsule mx-5" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Students</a></li>
+              <li><a class="dropdown-item" href="#">Subject</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="hello capsule">
+          <div class="dropdown">
+            <a class="btn btn-light dropdown-toggle capsule" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Menu
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Students</a></li>
+              <li><a class="dropdown-item" href="#">Subject</a></li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mx-5 mb-lg-0">
               @auth
