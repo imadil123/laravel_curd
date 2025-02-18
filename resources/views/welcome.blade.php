@@ -15,13 +15,13 @@
     <div class="container mt-5 d-flex justify-content-center">
         <div class="card col-5">
             <div class="card-header text-center">
-                <h1>Welcome page</h1>
+                <h1>Welcome</h1>
             </div>
             <div class="card-body">
                 <a href="{{ route('registration.user') }}"><button class="btn btn-primary" type="button">Register</button></a>
                 <a href="{{ route('login') }}"><button class="btn btn-primary" type="button">Login</button></a>
             </div>
-        </div>    
+        </div>   
     </div>
     
 

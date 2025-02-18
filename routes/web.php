@@ -6,6 +6,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\TestingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubjectController;
+
 
 Route::get('/', function () {
     // view file name
@@ -35,6 +37,20 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::controller(SubjectController::class)->group(function() {
+        Route::get('/subjects','index')->name('subjects.index');
+        Route::get('/subjects/create', 'create')->name('subjects.create');
+        Route::post('/subjects', 'store')->name('subjects.store');
+        Route::get('/subjects/{id}/edit','edit')->name('subjects.edit');
+        Route::put('/subjects/{id}','update')->name('subjects.update');
+        Route::delete('/subjects/{id}','destroy')->name('subjects.destroy');
+    });
+});
+    
+
+// new user page
 Route::view('/newUser', 'newUser');
 
 // registration Route 

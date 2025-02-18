@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\StudentController;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
 {
+
     public function register(Request $request)
     {
         $request->validate([
@@ -66,6 +68,6 @@ class UserController extends Controller
     public function loginCheck() {
         return redirect()->route('login')->with('Please login first.');
     }
-
-
+    
+   
 }
