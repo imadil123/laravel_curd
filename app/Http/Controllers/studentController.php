@@ -17,11 +17,6 @@ class StudentController extends Controller
         return view('students', $data);
     }
 
-    // public function ShowSubject()
-    // {
-    //    return view('SubjectPage');
-    // }
-
     // pagination
     public function fetchStudents(Request $request)
     {

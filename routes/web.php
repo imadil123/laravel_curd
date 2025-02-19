@@ -7,12 +7,14 @@ use App\Http\Controllers\TestingController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\MarksController;
 
-
-Route::get('/', function () {
-    // view file name
-    return view('welcome'); 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome'); 
+    })->name('home');
 });
+
 
 Route::get('/students/ajax', [StudentController::class, 'fetchStudents'])->name('students.fetch');
 Route::get('/students/search', [StudentController::class, 'searchStudents'])->name('search.students');
@@ -20,6 +22,7 @@ Route::get('/students/search', [StudentController::class, 'searchStudents'])->na
 Route::put('/students/update/{id}', [StudentController::class, 'update'])->name('students.update');
 Route::delete('/students/delete/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 
+Route::get('/subject/ajax', [SubjectController::class, 'fetchSubject'])->name('subject.fetch');
 
 
 Route::get('/user/{id}', function ($id) {
@@ -41,13 +44,22 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::controller(SubjectController::class)->group(function() {
         Route::get('/subjects','index')->name('subjects.index');
-        Route::get('/subjects/create', 'create')->name('subjects.create');
         Route::post('/subjects', 'store')->name('subjects.store');
-        Route::get('/subjects/{id}/edit','edit')->name('subjects.edit');
         Route::put('/subjects/{id}','update')->name('subjects.update');
         Route::delete('/subjects/{id}','destroy')->name('subjects.destroy');
     });
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::controller(MarksController::class)->group(function() {
+        Route::get('/marks','index')->name('marks.index');
+        Route::post('/marks', 'store')->name('marks.store');
+        Route::put('/marks/{id}','update')->name('marks.update');
+        Route::delete('/marks/{id}','destroy')->name('marks.destroy');
+    });
+});
+
+
     
 
 // new user page

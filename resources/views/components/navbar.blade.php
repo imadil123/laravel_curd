@@ -27,7 +27,7 @@
         overflow: auto;
   }
   .disabled-link {
-    color: rgb(232, 164, 56) !important; /* Change text color */
+    color: rgb(241, 132, 8) !important; /* Change text color */
     pointer-events: none; /* Disable clicking */
     cursor: not-allowed;
   }
@@ -36,7 +36,7 @@
 </style>
 <nav class="navbar navbar-expand-lg" style="background-color: #7952b3">
   <div class="container-fluid">
-      <a class="navbar-brand text-white font-weight-bold me-auto ms-3" href="#">iCode</a>
+      <a class="navbar-brand text-white font-weight-bold me-auto ms-3" href="{{ route('home')}}">iCode</a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,11 +45,14 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 mx-5 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active text-white navbar-link {{ Request::is('students') ? 'disabled-link' : 'text-white' }}" aria-current="page" href="{{ route('view.students') }}">Student</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white navbar-link {{ Request::is('subjects') ? 'disabled-link' : 'text-white' }} "  aria-current="page" href="{{ route('subjects.index') }}">Subjects</a>
+            </li>
               <li class="nav-item">
-                  <a class="nav-link active text-white navbar-link {{ Request::is('subjects') ? 'disabled-link' : 'text-white' }} "  aria-current="page" href="{{ route('subjects.index') }}">Subjects</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active text-white navbar-link" aria-current="page" href="#">Student</a>
+                  <a class="nav-link active text-white navbar-link {{ Request::is('marks') ? 'disabled-link' : 'text-white' }}" aria-current="page" href="{{ route('marks.index') }}">Marks</a>
               </li>
           </ul>
 

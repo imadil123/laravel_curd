@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Subject; // Assuming you have a Subject model
+use App\Models\Subject; 
+use Illuminate\Support\Facades\DB;
+
 use Validator;
 
 class SubjectController extends Controller
@@ -11,14 +13,20 @@ class SubjectController extends Controller
     // Show all subjects (index)
     public function index()
     {
-        $subjects = Subject::all();
-        return view('SubjectPage', compact('subjects')); // Pass subjects to the view
+        $data = array();
+        $data['subject'] = DB::table('subjects')->paginate(5);
+        return view('SubjectPage', $data);
     }
 
-    // Show the form to create a new subject
-    public function create()
+    public function fetchSubject(Request $request)
     {
-        return view('subjectpage'); // or you can create a separate view for creating subjects
+        $subjects = DB::table('subjects')->paginate(5); // Correct variable
+
+        if ($request->ajax()) {
+            return view('partials.subject-list', ['subject' => $subjects])->render();
+        }
+
+        return redirect()->route('subjects.index');
     }
 
     // Store the new subject
@@ -50,25 +58,26 @@ class SubjectController extends Controller
     // Update an existing subject
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'subject' => 'required|string|max:255',
-            'status' => 'required|in:Active,Inactive',
+            'status' => 'required|in:active,inactive', // Validate status field
         ]);
-
+    
         $subject = Subject::findOrFail($id);
         $subject->subject = $request->subject;
         $subject->status = $request->status;
-        $subject->save();
-
+        $subject->save(); // Save updated data
+    
         return redirect()->route('subjects.index')->with('success', 'Subject updated successfully!');
     }
-
+    
     // Delete a subject
     public function destroy($id)
     {
         $subject = Subject::findOrFail($id);
         $subject->delete();
 
-        return redirect()->route('subjects.index')->with('success', 'Subject deleted successfully!');
+        return redirect()->back()->with('status', 'Subject deleted successfully!');
+
     }
 }

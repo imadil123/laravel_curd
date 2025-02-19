@@ -166,6 +166,7 @@
             </div>
         </div>
     </div>
+
     <!-- Bootstrap Delete Confirmation Modal for Delete -->
     <div class="modal fade" id="deleteStudentModal" tabindex="-1" aria-labelledby="deleteStudentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -200,9 +201,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
     <script>
-
     // validation Roles
-
     $(document).ready(function () {
 
     // Add custom regex method
@@ -277,13 +276,13 @@
         }
     });
 
-    // Prevent form submission if validation fails
-    $("#updateStudentForm").on("submit", function (e) {
+     // Prevent form submission if validation fails
+        $("#updateStudentForm").on("submit", function (e) {
         if (!$(this).valid()) {
             e.preventDefault();
         }
-    });
-    });
+            });
+        });
 
 
 
@@ -317,6 +316,7 @@
             let studentGender = $(this).data('gender');
             let studentSubjects = $(this).data('subjects');
             let studentImage = $(this).data('image'); 
+
 
             $('#updateStudentId').val(studentId);
             $('#updateName').val(studentName);
